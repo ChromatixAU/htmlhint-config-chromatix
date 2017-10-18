@@ -1,41 +1,66 @@
 
-// Chromatix TM 09/11/2016
-// Custom rule to catch inline styles, but still allow background-image through
-
-// Based on https://raw.githubusercontent.com/yaniswang/HTMLHint/master/src/rules/inline-style-disabled.js
+/**
+ * Custom HTMLHint rule to catch inline styles, but still allow background-image through.
+ * This is because we use background-image a lot with dynamic content from WordPress.
+ * @see https://raw.githubusercontent.com/yaniswang/HTMLHint/master/src/rules/inline-style-disabled.js
+ */
 
 // For help writing rules, browse the default rule database:
 // https://github.com/yaniswang/HTMLHint/tree/master/src/rules
 
-module.exports = function( HTMLHint ) {
-	HTMLHint.addRule({
-		id: 'inline-style-disabled-except-bg-image',
-		description: 'Inline style cannot be used (except for background-image).',
-		init: function( parser, reporter ) {
-			var self = this;
-			parser.addListener( 'tagstart', function( event ) {
-				var attrs = event.attrs;
-				var attr;
-				var col = event.col + event.tagName.length + 1;
-				var i, l;
-				
-				for ( i = 0, l = attrs.length; i < l; i++ ) {
-					attr = attrs[i];
-					if ( 'style' === attr.name.toLowerCase() ) {
-						if ( 'background-image' !== attr.value.substring( 0, 16 ) ) {
-							reporter.warn(
-								'Inline style [ ' + attr.raw + ' ] cannot be used.',
-								event.line,
-								col + attr.index,
-								self,
-								attr.raw
-							);
-						}
-					}
-				}
-			});
-		}
-	});
-};
+'use strict';
 
-// The end!
+module.exports = function( HTMLHint ) {
+
+  HTMLHint.addRule({
+
+    id:          'inline-style-disabled-except-bg-image',
+    description: 'Inline style cannot be used (except for background-image).',
+
+    init: function( parser, reporter ) {
+
+      const self = this;
+
+      parser.addListener( 'tagstart', function( event ) {
+
+        const START_OF_STRING = 0,
+              ITERATE_START = 0,
+              ITERATE_INCREMENT = 1,
+              EXTRA_COLUMN = 1;
+
+        const attrs = event.attrs,
+              column = event.col + event.tagName.length + EXTRA_COLUMN,
+              allowedProp = 'background-image';
+
+        let attr, iterate;
+
+        for (
+          iterate = ITERATE_START; iterate < attrs.length; iterate = iterate + ITERATE_INCREMENT
+        ) {
+
+          attr = attrs[iterate];
+
+          // Pass on non-style attributes, and background-image starting the attribute value.
+          if ( 'style' !== attr.name.toLowerCase() ) {
+            continue;
+          }
+
+          // Pass on background-image starting the attribute value.
+          if ( allowedProp === attr.value.substring( START_OF_STRING, allowedProp.length ) ) {
+            continue;
+          }
+
+          // If we've got here, there's an inline style we don't want.
+          reporter.warn(
+            'Inline style [ ' + attr.raw + ' ] cannot be used.',
+            event.line,
+            column + attr.index,
+            self,
+            attr.raw
+          );
+
+        } // For each attribute.
+      }); // AddListener.
+    } // Init.
+  }); // AddRule.
+}; // Module.exports
