@@ -1,0 +1,39 @@
+{
+  "name": "@chromatix/htmlhint-config-chromatix",
+  "version": "0.0.1",
+  "description": "Chromatix custom config for HTMLHint.",
+  "author": "Tim Malone <tim.malone@chromatix.com.au>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ChromatixAU/htmlhint-config-chromatix.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ChromatixAU/htmlhint-config-chromatix/issues"
+  },
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint --ignore-pattern coverage/ **/*.js *.js",
+    "test": "jest --verbose --coverage"
+  },
+  "jest": {
+    "testMatch": [
+      "**/tests/**/*.js"
+    ]
+  },
+  "keywords": [
+    "htmlhint",
+    "htmlhint-config",
+    "chromatix",
+    "html"
+  ],
+  "devDependencies": {
+    "@chromatix/eslint-config-chromatix": "^0.0.8",
+    "eslint": "^4.9.0",
+    "is-plain-obj": "^1.1.0",
+    "jest": "^21.2.1"
+  },
+  "dependencies": {
+    "htmlhint": "^0.9.13"
+  }
+}

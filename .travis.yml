@@ -1,0 +1,60 @@
+language: node_js
+
+# We need sudo as some of our externally-called scripts may need to install packages.
+sudo: required
+
+# Speed up subsequent builds by caching dependencies.
+cache:
+  yarn: true
+  directories:
+    - node_modules
+
+# Skip builds on version tags, as they'll occur on the branch anyway.
+branches:
+  except:
+    - /^v[0-9]\.[0-9]\.[0-9]/
+
+# Build against common versions.
+node_js:
+  - node
+  - iojs
+  - lts/*
+
+# Save time by only cloning the most recent commit.
+git:
+  depth: 1
+
+matrix:
+  allow_failures:
+
+    # Iojs is for advisory purposes only for now; we can allow this to fail.
+    - node_js: iojs
+
+  # Allow build to finish before our allowed failures run.
+  fast_finish: true
+
+before_install:
+
+  # Ensure the latest version of Node is being used, because Yarn will want it.
+  # @see https://github.com/creationix/nvm#usage
+  - nvm install node
+  - nvm use node
+
+  # Ensure the latest version of Yarn is being used, because Travis pins to an old one.
+  # @see https://docs.travis-ci.com/user/languages/javascript-with-nodejs/#Travis-CI-supports-yarn
+  - travis_retry curl -o- --location https://yarnpkg.com/install.sh | bash
+  - export PATH="$HOME/.yarn/bin:$PATH"
+
+install:
+  - yarn
+
+script:
+  - yarn lint
+  - yarn test
+
+notifications:
+  email: false
+  webhooks:
+    urls:
+      - https://chr-cicd.herokuapp.com/hooks/travis.php
+    on_start: always
