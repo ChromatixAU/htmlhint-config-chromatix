@@ -13,8 +13,8 @@
   },
   "main": "index.js",
   "scripts": {
-    "lint": "yarn run eslint --ignore-pattern coverage/ \"**/*.js\"",
-    "test": "yarn run jest --verbose --coverage"
+    "lint": "yarn eslint --ignore-pattern coverage/ \"**/*.js\"",
+    "test": "yarn jest --verbose --coverage"
   },
   "jest": {
     "testMatch": [
