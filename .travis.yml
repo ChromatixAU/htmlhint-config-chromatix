@@ -51,6 +51,7 @@ install:
 script:
   - yarn lint
   - yarn test
+  - tav
 
 notifications:
   email: false
