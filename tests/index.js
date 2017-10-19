@@ -109,11 +109,3 @@ test( 'Wrapped verify() fails test string when overriding bundled shared config'
   expect( results.map( getResultRuleId ) ).toContain( TESTABLE_RULE );
 
 });
-
-test.skip( 'Wrapped verify() accepts bundled custom rules', () => {
-
-  //const HTMLHintWrapped = require( FILENAME ).HTMLHint;
-
-  // TODO.
-
-});
