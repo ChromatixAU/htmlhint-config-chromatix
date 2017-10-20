@@ -34,7 +34,6 @@ matrix:
 
 install:
   - npm install
-  - npm install --global jest
 
 script:
   - npm run lint
