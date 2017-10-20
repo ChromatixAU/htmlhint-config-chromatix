@@ -1,3 +1,3 @@
 htmlhint:
   versions: '^0.9.6'
-  commands: node_modules/.bin/jest --verbose
+  commands: jest --verbose
