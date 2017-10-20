@@ -14,7 +14,7 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint --ignore-pattern coverage/ \"**/*.js\"",
-    "test": "jest --verbose --coverage"
+    "test": "jest --verbose --coverage && tav --ci"
   },
   "jest": {
     "testMatch": [
@@ -28,7 +28,7 @@
     "html"
   ],
   "dependencies": {
-    "htmlhint": "^0.9.13"
+    "htmlhint": "^0.9.6"
   },
   "devDependencies": {
     "@chromatix/eslint-config-chromatix": "^0.0.8",

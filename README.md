@@ -6,6 +6,8 @@ Configuration and additional rules for [HTMLHint](https://yarnpkg.com/en/package
 
 ## Installation
 
+**Remember this config is still in development, and may not work as expected yet.**
+
 Install globally to use on any project:
 
     yarn global add @chromatix/htmlhint-config-chromatix
@@ -16,7 +18,14 @@ Install locally to one project:
 
 ## Usage
 
-Coming soon.
+**Coming soon.**
+
+## Contributing
+
+* Use `npm` instead of `yarn`, due to CI testing dependency on `test-all-versions`, which will not work with Yarn.
+* Lint (`npm run lint`) and test (`npm test`) your work before pushing.
+
+CI will attempt to run tests on every supported version of HTMLHint. This package will not work with HTMLHint 0.9.5, but every version so far from 0.9.6 onwards should be fine.
 
 ## License
 

@@ -5,7 +5,6 @@ sudo: required
 
 # Speed up subsequent builds by caching dependencies.
 cache:
-  yarn: true
   directories:
     - node_modules
 
@@ -33,25 +32,12 @@ matrix:
   # Allow build to finish before our allowed failures run.
   fast_finish: true
 
-before_install:
-
-  # Ensure the latest version of Node is being used, because Yarn will want it.
-  # @see https://github.com/creationix/nvm#usage
-  - nvm install node
-  - nvm use node
-
-  # Ensure the latest version of Yarn is being used, because Travis pins to an old one.
-  # @see https://docs.travis-ci.com/user/languages/javascript-with-nodejs/#Travis-CI-supports-yarn
-  - travis_retry curl -o- --location https://yarnpkg.com/install.sh | bash
-  - export PATH="$HOME/.yarn/bin:$PATH"
-
 install:
-  - yarn
+  - npm install
 
 script:
-  - yarn lint
-  - yarn test
-  - tav
+  - npm run lint
+  - npm test
 
 notifications:
   email: false
